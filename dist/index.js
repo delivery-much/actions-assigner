@@ -6804,8 +6804,9 @@ const { handle } = __webpack_require__(790)
 const run = async () => {
   try {
     const token = getInput('token', { required: true })
-    const team = getInput('team', { required: true })
-    await handle(token, team)
+    const reviewers = getInput('reviewers', { required: false })
+    const teamReviewers = getInput('team-reviewers', { required: false })
+    await handle(token, reviewers, teamReviewers)
   } catch (error) {
     setFailed(error.message)
   }
@@ -7213,13 +7214,14 @@ const { context, getOctokit } = __webpack_require__(469)
  * Creates Octokit instance and run assign and review.
  *
  * @param {string} token - GitHub token
- * @param {string} team - GitHub organization team
+ * @param {string} reviewers - GitHub usernames
+ * @param {string} teamReviewers - GitHub teams
  */
-const handle = async (token, team) => {
+const handle = async (token, reviewers, teamReviewers) => {
   if (context.eventName === 'pull_request') {
     const octokit = getOctokit(token)
     await assign(octokit)
-    await review(octokit, team)
+    if (reviewers || teamReviewers) await review(octokit, team)
   } else {
     throw new Error('Sorry, this Action only works with pull requests.')
   }
@@ -7245,19 +7247,21 @@ const assign = async (octokit) => {
 }
 
 /**
- * Request PR review for given team.
+ * Request PR review to given reviewers.
  *
  * @param {Octokit} octokit - Octokit instance
- * @param {string} team - GitHub organization team
+ * @param {string} reviewers - GitHub usernames
+ * @param {string} teamReviewers - GitHub teams
  */
-const review = async (octokit, team) => {
+const review = async (octokit, reviewers, teamReviewers) => {
   try {
     const { owner, repo } = context.issue
     await octokit.pulls.requestReviewers({
       owner: owner,
       repo: repo,
       pull_number: context.payload.pull_request.number,
-      team_reviewers: [team]
+      reviewers: reviewers.split(',') || undefined,
+      team_reviewers: teamReviewers.split(',') || undefined,
     })
   } catch (err) {
     throw new Error(`Couldn't request review for ${team}.\n  Error: ${err}`)
