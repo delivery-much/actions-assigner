@@ -11,7 +11,7 @@ const handle = async (token, reviewers, teamReviewers) => {
   if (context.eventName === 'pull_request') {
     const octokit = getOctokit(token)
     await assign(octokit)
-    if (reviewers || teamReviewers) await review(octokit, team)
+    if (reviewers || teamReviewers) await review(octokit, reviewers, teamReviewers)
   } else {
     throw new Error('Sorry, this Action only works with pull requests.')
   }
@@ -54,7 +54,7 @@ const review = async (octokit, reviewers, teamReviewers) => {
       team_reviewers: teamReviewers.split(',') || undefined,
     })
   } catch (err) {
-    throw new Error(`Couldn't request review for ${team}.\n  Error: ${err}`)
+    throw new Error(`Couldn't request review.\n  Error: ${err}`)
   }
 }
 
