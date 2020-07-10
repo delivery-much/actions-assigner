@@ -4,13 +4,14 @@ const { context, getOctokit } = require('@actions/github')
  * Creates Octokit instance and run assign and review.
  *
  * @param {string} token - GitHub token
- * @param {string} team - GitHub organization team
+ * @param {string} reviewers - GitHub usernames
+ * @param {string} teamReviewers - GitHub teams
  */
-const handle = async (token, team) => {
+const handle = async (token, reviewers, teamReviewers) => {
   if (context.eventName === 'pull_request') {
     const octokit = getOctokit(token)
     await assign(octokit)
-    await review(octokit, team)
+    if (reviewers || teamReviewers) await review(octokit, reviewers, teamReviewers)
   } else {
     throw new Error('Sorry, this Action only works with pull requests.')
   }
@@ -36,22 +37,24 @@ const assign = async (octokit) => {
 }
 
 /**
- * Request PR review for given team.
+ * Request PR review to given reviewers.
  *
  * @param {Octokit} octokit - Octokit instance
- * @param {string} team - GitHub organization team
+ * @param {string} reviewers - GitHub usernames
+ * @param {string} teamReviewers - GitHub teams
  */
-const review = async (octokit, team) => {
+const review = async (octokit, reviewers, teamReviewers) => {
   try {
     const { owner, repo } = context.issue
     await octokit.pulls.requestReviewers({
       owner: owner,
       repo: repo,
       pull_number: context.payload.pull_request.number,
-      team_reviewers: [team]
+      reviewers: reviewers.split(',').filter(x => x !== context.actor) || undefined,
+      team_reviewers: teamReviewers.split(',') || undefined
     })
   } catch (err) {
-    throw new Error(`Couldn't request review for ${team}.\n  Error: ${err}`)
+    throw new Error(`Couldn't request review.\n  Error: ${err}`)
   }
 }
 

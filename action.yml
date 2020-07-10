@@ -1,5 +1,5 @@
-name: 'Auto assign PR and request team review'
-description: 'Auto assign PR and request team review'
+name: 'Auto assign PR and request review'
+description: 'Auto assign PR and request review'
 author: '@delivery-much'
 branding:
   icon: 'code'
@@ -8,9 +8,12 @@ inputs:
   token:
     description: 'GitHub token'
     required: true
-  team:
-    description: 'GitHub organization team'
-    required: true
+  reviewers:
+    description: 'GitHub usernames'
+    required: false
+  team-reviewers:
+    description: 'GitHub teams'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
