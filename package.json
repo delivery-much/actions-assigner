@@ -1,0 +1,40 @@
+{
+  "name": "actions-assigner",
+  "version": "1.0.0",
+  "description": "Auto assign PR and request team review",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "standard",
+    "lint:fix": "standard --fix",
+    "package": "ncc build src/index.js -o dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/delivery-much/actions-assigner.git"
+  },
+  "keywords": [
+    "GitHub",
+    "Actions",
+    "JavaScript"
+  ],
+  "author": "@delivery-much",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/delivery-much/actions-assigner/issues"
+  },
+  "homepage": "https://github.com/delivery-much/actions-assigner#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.4",
+    "@actions/github": "^4.0.0",
+    "@octokit/rest": "^18.0.0"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "^0.22.3",
+    "standard": "^14.3.4"
+  },
+  "standard": {
+    "ignore": [
+      "/dist/*.js"
+    ]
+  }
+}

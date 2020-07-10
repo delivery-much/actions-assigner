@@ -1,0 +1,16 @@
+name: 'Auto assign PR and request team review'
+description: 'Auto assign PR and request team review'
+author: '@delivery-much'
+branding:
+  icon: 'code'
+  color: 'yellow'
+inputs:
+  token:
+    description: 'GitHub token'
+    required: true
+  team:
+    description: 'GitHub organization team'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
