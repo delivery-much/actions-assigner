@@ -51,7 +51,7 @@ const review = async (octokit, reviewers, teamReviewers) => {
       repo: repo,
       pull_number: context.payload.pull_request.number,
       reviewers: reviewers.split(',') || undefined,
-      team_reviewers: teamReviewers.split(',') || undefined,
+      team_reviewers: teamReviewers.split(',') || undefined
     })
   } catch (err) {
     throw new Error(`Couldn't request review.\n  Error: ${err}`)

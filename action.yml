@@ -1,5 +1,5 @@
-name: 'Auto assign PR and request team review'
-description: 'Auto assign PR and request team review'
+name: 'Auto assign PR and request review'
+description: 'Auto assign PR and request review'
 author: '@delivery-much'
 branding:
   icon: 'code'
