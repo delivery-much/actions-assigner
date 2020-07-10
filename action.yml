@@ -8,9 +8,12 @@ inputs:
   token:
     description: 'GitHub token'
     required: true
-  team:
-    description: 'GitHub organization team'
-    required: true
+  reviewers:
+    description: 'GitHub usernames'
+    required: false
+  team-reviewers:
+    description: 'GitHub teams'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
