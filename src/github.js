@@ -50,7 +50,7 @@ const review = async (octokit, reviewers, teamReviewers) => {
       owner: owner,
       repo: repo,
       pull_number: context.payload.pull_request.number,
-      reviewers: reviewers.split(',') || undefined,
+      reviewers: reviewers.split(',').filter(x => x !== context.actor) || undefined,
       team_reviewers: teamReviewers.split(',') || undefined
     })
   } catch (err) {
