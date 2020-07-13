@@ -28,5 +28,5 @@ jobs:
       - uses: delivery-much/actions-assigner@v1
         with:
           token: ${{ secrets.GH_TOKEN }}
-          team: backend
+          team-reviewers: backend
 ```
