@@ -8,7 +8,7 @@ If `reviewers` or `team-reviewers` are not set, the Action will only auto assign
 
 | Name | Description | Example |
 | --- | --- | --- |
-| `token` | **Required** A `repo` scoped personal access token. [Why](https://github.com/peter-evans/create-pull-request/issues/155#issuecomment-611904487). | ${{ secrets.GH_TOKEN }} |
+| `token` | **Required if using team-reviewers** A `repo` scoped personal access token. [Why](https://github.com/peter-evans/create-pull-request/issues/155#issuecomment-611904487). [Create one here](https://github.com/settings/tokens/new). | ${{ secrets.GH_TOKEN }} |
 | `reviewers` | GitHub usernames, separated by comma | user1,user2,user3
 | `team-reviewers` | Organization team names, separated by comma | backend
 
