@@ -7218,7 +7218,7 @@ const { context, getOctokit } = __webpack_require__(469)
  * @param {string} teamReviewers - GitHub teams
  */
 const handle = async (token, reviewers, teamReviewers) => {
-  if (context.eventName === 'pull_request') {
+  if (/^pull_request(_target)?$/.test(context.eventName)) {
     const octokit = getOctokit(token)
     await assign(octokit)
     if (reviewers || teamReviewers) await review(octokit, reviewers, teamReviewers)
